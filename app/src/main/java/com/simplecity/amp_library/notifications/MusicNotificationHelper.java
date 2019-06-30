@@ -151,17 +151,15 @@ public class MusicNotificationHelper extends NotificationHelper {
                 }));
     }
 
-    public boolean startForeground(Service service, @NonNull Song song, boolean isPlaying, @NonNull MediaSessionCompat.Token mediaSessionToken) {
+    public void startForeground(Service service, @NonNull Song song, boolean isPlaying, @NonNull MediaSessionCompat.Token mediaSessionToken) {
         notify(service, song, isPlaying, mediaSessionToken);
         try {
             AnalyticsManager.dropBreadcrumb(TAG, "startForeground() called");
             Log.w(TAG, "service.startForeground called");
             service.startForeground(NOTIFICATION_ID, notification);
-            return true;
         } catch (RuntimeException e) {
             Log.e(TAG, "startForeground not called, error: " + e);
             LogUtils.logException(TAG, "Error starting foreground notification", e);
-            return false;
         }
     }
 
